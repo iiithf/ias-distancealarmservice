@@ -1,6 +1,6 @@
 {
   "name": "ias-distancealarmservice",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This service accepts the output of Distance Sensor and checks its range.",
   "main": "index.js",
   "scripts": {
