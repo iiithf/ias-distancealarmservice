@@ -1,0 +1,29 @@
+{
+  "name": "ias-distancealarmservice",
+  "version": "0.0.1",
+  "description": "This service accepts the output of Distance Sensor and checks its range.",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iiithf/ias-distancealarmservice.git"
+  },
+  "keywords": [
+    "ias",
+    "distance",
+    "alarm",
+    "service"
+  ],
+  "author": "wolfram77@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iiithf/ias-distancealarmservice/issues"
+  },
+  "homepage": "https://github.com/iiithf/ias-distancealarmservice#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "needle": "^2.3.0"
+  }
+}
