@@ -6,7 +6,7 @@ const http = require('http');
 
 const E = process.env;
 const PORT = parseInt(E['PORT']||'8000', 10);
-const SENSOR = E['SENSOR']||'';
+const SOURCE = E['SOURCE']||'';
 const TARGET = E['TARGET']||'';
 const DATARATE = parseInt(E['DATARATE']||'1000', 10);
 const app = express();
@@ -29,9 +29,9 @@ function responseGet(options) {
 }
 
 async function onInterval() {
-  if(!SENSOR) return;
-  var res = await needle('get', SENSOR);
-  console.log('SENSOR', SENSOR, res.body);
+  if(!SOURCE) return;
+  var res = await needle('get', SOURCE);
+  console.log('SOURCE', SOURCE, res.body);
   if(!TARGET) return;
   var data = responseGet(res.body);
   dtime = data.time;
