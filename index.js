@@ -6,7 +6,9 @@ const http = require('http');
 
 const E = process.env;
 const PORT = parseInt(E['PORT']||'8000', 10);
+const SENSOR = E['SENSOR']||'';
 const TARGET = E['TARGET']||'';
+const DATARATE = parseInt(E['DATARATE']||'1000', 10);
 const app = express();
 const server = http.createServer(app);
 var status = '', dtime = new Date();
@@ -19,6 +21,24 @@ function statusGet(distance) {
   if(d<=200) return 'CRITICAL '+d;
   return 'ALL FINE '+d;
 }
+
+function responseGet(options) {
+  var {time, distance} = options;
+  var status = statusGet(distance);
+  return {time, distance, status};
+}
+
+async function onInterval() {
+  if(!SENSOR) return;
+  var res = await needle('get', SENSOR);
+  console.log('SENSOR', SENSOR, res.body);
+  if(!TARGET) return;
+  var data = responseGet(res.body);
+  dtime = data.time;
+  res = await needle('post', TARGET, data, {json: true});
+  console.log('TARGET', TARGET, data);
+}
+setInterval(onInterval, DATARATE);
 
 
 
@@ -35,14 +55,12 @@ app.get('/status', (req, res) => {
   res.json({time: dtime, status});
 });
 app.post('/status', (req, res) => {
-  var {distance} = req.body;
-  status = statusGet(distance);
-  dtime = new Date();
-  var data = {time: dtime, status};
+  var data = responseGet(req.body);
+  dtime = data.time;
   res.json(data);
   if(!TARGET) return;
   needle('post', TARGET, data, {json: true}).then(() => {
-    console.log('POST', TARGET, data);
+    console.log('TARGET', TARGET, data);
   }, next);
 });
 
