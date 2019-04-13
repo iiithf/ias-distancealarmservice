@@ -4,6 +4,7 @@
   "description": "This service accepts the output of Distance Sensor and checks its range.",
   "main": "index.js",
   "scripts": {
+    "start": "node ./",
     "test": "exit"
   },
   "repository": {
