@@ -24,7 +24,7 @@ function statusGet(distance) {
 
 function responseGet(options) {
   var {time, distance} = options;
-  var status = statusGet(distance);
+  status = statusGet(distance);
   return {time, distance, status};
 }
 
